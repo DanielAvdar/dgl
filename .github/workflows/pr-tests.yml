@@ -3,7 +3,7 @@ name: Tests
 on: [ push,pull_request ]
 env:
   DGL_HOME: ./
-  DGL_LIBRARY_PATH: ${{ env.DGL_HOME }}/build
+  DGL_LIBRARY_PATH: ./build
 jobs:
   tests:
 
