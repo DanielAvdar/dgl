@@ -29,33 +29,38 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           source ./python/venv/bin/activate
-          sudo apt-get update
-          sudo apt-get install -y build-essential python3-dev make cmake
-          bash script/build_dgl.sh -c
+          mkdir build
+          cd build
+          cmake -DUSE_OPENMP=off -DUSE_LIBXSMM=OFF ..
+          make -j4
+          cd ../python
+          python setup.py install
+          python setup.py build_ext --inplace
 
       - name: Install OS Dependencies
         if: matrix.os == 'macos-latest'
         run: |
           source ./python/venv/bin/activate
-          brew install cmake
           mkdir build
           cd build
-          cmake -DUSE_OPENMP=off -DCMAKE_C_FLAGS='-DXBYAK_DONT_USE_MAP_JIT' -DCMAKE_CXX_FLAGS='-DXBYAK_DONT_USE_MAP_JIT' -DUSE_AVX=OFF -DUSE_LIBXSMM=OFF ..
+          cmake -DUSE_OPENMP=off -DUSE_LIBXSMM=OFF ..
           make -j4
           cd ../python
           python setup.py install
+          python setup.py build_ext --inplace
 
       - name: Install OS Dependencies
         if: matrix.os == 'windows-latest'
         run: |
-          python/venv/bin/activate
+          ./python/venv/bin/activate.bat
           choco install msbuild cmake
-          MD build
-          CD build
-          cmake -DCMAKE_CXX_FLAGS="/DDGL_EXPORTS" -DCMAKE_CONFIGURATION_TYPES="Release" -DDMLC_FORCE_SHARED_CRT=ON .. -G "Visual Studio 16 2019"
+          mkdir build
+          cd build
+          cmake -DUSE_OPENMP=off -DUSE_LIBXSMM=OFF ..
           msbuild dgl.sln /m
-          CD ..\python
+          cd ../python
           python setup.py install
+          python setup.py build_ext --inplace
 
       - name: Test with pytest
         run: |
