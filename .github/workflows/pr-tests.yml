@@ -2,8 +2,8 @@ name: Tests
 
 on: [ push,pull_request ]
 env:
-  DGL_HOME: ./
-  DGL_LIBRARY_PATH: ./build
+  DGL_HOME: ${{ github.workspace }}
+  DGL_LIBRARY_PATH: ${{ github.workspace }}/build
 jobs:
   tests:
 
