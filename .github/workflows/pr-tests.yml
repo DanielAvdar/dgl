@@ -52,7 +52,7 @@ jobs:
       - name: Install OS Dependencies
         if: matrix.os == 'windows-latest'
         run: |
-          ${github.workspace}/python/venv/Scripts/activate.bat
+          ${{ github.workspace }}/python/venv/Scripts/activate.bat
           choco install msbuild cmake
           mkdir build
           cd build
