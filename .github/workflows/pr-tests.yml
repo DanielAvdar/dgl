@@ -27,7 +27,6 @@ jobs:
       - name: Install OS Dependencies
         if: matrix.os == 'macos-latest'
         run: |
-          xcode-select --install
           brew install cmake
           mkdir build
           cd build
