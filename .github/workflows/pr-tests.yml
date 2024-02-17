@@ -19,9 +19,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Set Environment Variables
         run: |
-          export DGL_HOME=/path/to/your/dgl/clone
+          export DGL_HOME=./
           export DGL_LIBRARY_PATH=$DGL_HOME/build
-          export PYTHONPATH=$PYTHONPATH:$DGL_HOME/python
+
       - name: Install OS Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
