@@ -48,10 +48,17 @@ jobs:
           cd ../python
           python setup.py install
           python setup.py build_ext --inplace
-
+      - name: Debug
+        run: |
+          echo $env:PATH
+          where.exe msbuild
+          msbuild.exe /version
       - name: Install OS Dependencies
         if: matrix.os == 'windows-latest'
         run: |
+          echo $env:PATH
+          where.exe msbuild
+          msbuild.exe /version
           ${{ github.workspace }}/python/venv/Scripts/activate.bat
           choco install msbuild cmake
           mkdir build
