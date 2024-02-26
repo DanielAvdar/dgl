@@ -48,13 +48,13 @@ jobs:
           cd ../python
           python setup.py install
           python setup.py build_ext --inplace
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
       - name: Debug
         run: |
           echo $env:PATH
           where.exe msbuild
           msbuild.exe /version
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v2
       - name: Install OS Dependencies
         if: matrix.os == 'windows-latest'
         run: |
